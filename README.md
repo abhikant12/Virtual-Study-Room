@@ -9,6 +9,14 @@ Virtual Study Room is a fully functional ed-tech platform that enables students 
 
 <img align="center" src="./public/assets/p3.png">
 
+<br><br>
+
+## Technologies Used 
+- Server - Nodejs 
+- Client - HTML,CSS,JS
+- Chat - WebSockets
+- Voice - WebRTC
+ 
 
 ## Current Features?
 1. Video Calls
