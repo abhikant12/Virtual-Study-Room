@@ -9,6 +9,8 @@ Virtual Study Room is a fully functional ed-tech platform that enables students 
 
 <img align="center" src="./public/assets/p3.png">
 
+<img align="center" src="./public/assets/p4.png">
+
 <br><br>
 
 ## Technologies Used 
