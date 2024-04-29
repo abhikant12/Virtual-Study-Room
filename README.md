@@ -25,6 +25,7 @@ Virtual Study Room is a fully functional ed-tech platform that enables students 
 2. Chatbox
 3. Collaborative Whiteboard
 4. Screensharing
+5. Screen Recorder
 
 
 ## Upcoming Features?
