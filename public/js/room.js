@@ -14,6 +14,7 @@ const audioButt = document.querySelector('.audio');
 const cutCall = document.querySelector('.cutcall');
 const screenShareButt = document.querySelector('.screenshare');
 const whiteboardButt = document.querySelector('.board-icon')
+const ScreenRecorder = document.querySelector('.ScreenRecorder');
 
 //whiteboard js start
 const whiteboardCont = document.querySelector('.whiteboard-cont');
@@ -707,6 +708,57 @@ socket.on('action', (msg, sid) => {
         videoInfo[sid] = 'on';
     }
 })
+
+
+
+let recorder;
+let chunks = [];
+let recordingActive = false;
+
+const startRecording = async () => {
+    try {
+        const audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+
+        const combinedStream = new MediaStream([...audioStream.getTracks(), ...screenStream.getTracks()]);
+
+        recorder = new MediaRecorder(combinedStream);
+        recorder.ondataavailable = (e) => {
+            chunks.push(e.data);
+        };
+
+        recorder.onstop = () => {
+            const blob = new Blob(chunks, { type: 'video/webm' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'screen-recording.webm';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+
+            chunks = [];
+            recordingActive = false;
+        };
+        
+        recorder.start();
+        recordingActive = true;
+    } catch (error) {
+        console.error('Error accessing screen:', error);
+    }
+};
+
+ScreenRecorder.addEventListener('click', () => {
+    if(!recordingActive) {
+        startRecording();
+    } else {
+        recorder.stop();
+    }
+});
+
+
+
 
 whiteboardButt.addEventListener('click', () => {
     if (boardVisisble) {
